@@ -109,7 +109,14 @@ public extension MKMapView {
             return CLLocationCoordinate2D(latitude:  coordinate[0], longitude: coordinate[1])
         }
         guard let mapRect = coodinates.mapRect() else { return }
-        self.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: CGFloat(padding), left: CGFloat(padding), bottom: CGFloat(padding), right: CGFloat(padding)), animated: animated)
+        if (animated) {
+            UIView.animate(withDuration: 0.5) {
+                self.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: CGFloat(padding), left: CGFloat(padding), bottom: CGFloat(padding), right: CGFloat(padding)), animated: true)
+            }
+        } 
+        else {
+            self.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: CGFloat(padding), left: CGFloat(padding), bottom: CGFloat(padding), right: CGFloat(padding)), animated: false)
+        }
     }
     
     func setCenterCoordinateRegion(centerCoordinate: CLLocationCoordinate2D, zoomLevel: Double, animated: Bool) {
