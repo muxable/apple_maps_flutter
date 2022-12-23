@@ -111,6 +111,7 @@ public extension MKMapView {
         guard let mapRect = coodinates.mapRect() else { return }
         if (animated) {
             UIView.animate(withDuration: 0.1) {
+                print("@@@@@@@@@@@ hello")
                 self.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: CGFloat(padding), left: CGFloat(padding), bottom: CGFloat(padding), right: CGFloat(padding)), animated: false)
             }
         } 
