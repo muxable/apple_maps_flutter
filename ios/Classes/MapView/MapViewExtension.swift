@@ -109,15 +109,7 @@ public extension MKMapView {
             return CLLocationCoordinate2D(latitude:  coordinate[0], longitude: coordinate[1])
         }
         guard let mapRect = coodinates.mapRect() else { return }
-        if (animated) {
-            UIView.animate(withDuration: 0.1) {
-                print("@@@@@@@@@@@ hello")
-                self.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: CGFloat(padding), left: CGFloat(padding), bottom: CGFloat(padding), right: CGFloat(padding)), animated: false)
-            }
-        } 
-        else {
-            self.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: CGFloat(padding), left: CGFloat(padding), bottom: CGFloat(padding), right: CGFloat(padding)), animated: false)
-        }
+        self.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: CGFloat(padding), left: CGFloat(padding), bottom: CGFloat(padding), right: CGFloat(padding)), animated: animated)
     }
     
     func setCenterCoordinateRegion(centerCoordinate: CLLocationCoordinate2D, zoomLevel: Double, animated: Bool) {
@@ -176,7 +168,9 @@ public extension MKMapView {
         // clamp large numbers to 28
         let zoomL = min(zoomLevel, 28);
         let altitude = getCameraAltitude(centerCoordinate: centerCoordinate, zoomLevel: zoomL)
-        self.setCamera(MKMapCamera(lookingAtCenter: centerCoordinate, fromDistance: CLLocationDistance(altitude), pitch: Holder._pitch, heading: Holder._heading), animated: animated)
+        UIView.animate(withDuration: 0.1) {
+            self.setCamera(MKMapCamera(lookingAtCenter: centerCoordinate, fromDistance: CLLocationDistance(altitude), pitch: Holder._pitch, heading: Holder._heading), animated: animated)
+        }
     }
     
     private func getCameraAltitude(centerCoordinate: CLLocationCoordinate2D, zoomLevel: Double) -> Double {
