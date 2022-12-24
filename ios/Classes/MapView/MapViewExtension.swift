@@ -168,7 +168,14 @@ public extension MKMapView {
         // clamp large numbers to 28
         let zoomL = min(zoomLevel, 28);
         let altitude = getCameraAltitude(centerCoordinate: centerCoordinate, zoomLevel: zoomL)
-        self.setCamera(MKMapCamera(lookingAtCenter: centerCoordinate, fromDistance: CLLocationDistance(altitude), pitch: Holder._pitch, heading: Holder._heading), animated: animated)
+
+        if(animated) {
+            UIView.animate(withDuration: 0.1) {
+                self.setCamera(MKMapCamera(lookingAtCenter: centerCoordinate, fromDistance: CLLocationDistance(altitude), pitch: Holder._pitch, heading: Holder._heading), animated: animated)
+            }
+        } else {
+            self.setCamera(MKMapCamera(lookingAtCenter: centerCoordinate, fromDistance: CLLocationDistance(altitude), pitch: Holder._pitch, heading: Holder._heading), animated: false)
+        }
     }
     
     private func getCameraAltitude(centerCoordinate: CLLocationCoordinate2D, zoomLevel: Double) -> Double {
